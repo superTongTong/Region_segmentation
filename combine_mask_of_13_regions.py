@@ -36,13 +36,12 @@ def find_and_read_nifti_data(directory):
             if filename in found_files:
                 file_path = os.path.join(root, filename)
                 try:
-                    img = nib.load(file_path)
-
-                    found_files[filename] = img.get_fdata()
+                    image_data = nib.load(file_path).get_fdata()
+                    found_files[filename] = image_data
                 except Exception as e:
                     print(f"Error reading {filename}: {e}")
 
-    return found_files, img.affine
+    return found_files
 
 
 def dilated_mask(combined_mask, affine):
