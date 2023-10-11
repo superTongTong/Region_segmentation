@@ -26,14 +26,15 @@ def main():
     data_input = Path(args.input)
     output_path = Path(args.output)
 
-    # set the command-line arguments as needed.
-    command = f'python ./totalsegmentator/bin/TotalSegmentator.py -i "{data_input}" -o seg_exsample'
+    # # set the command-line arguments as needed.
+    # command = f'python ./totalsegmentator/bin/TotalSegmentator.py -i "{data_input}" -o "{data_input}"'
+    #
+    # # Run the command
+    # subprocess.run(command, shell=True)
 
-    # Run the command
-    subprocess.run(command, shell=True)
-
-    found_data, affine = find_and_read_nifti_data(output_path)
-
+    found_data = find_and_read_nifti_data(output_path)
+    liver_seg = nib.load(output_path / f"liver.nii.gz")
+    affine = liver_seg.affine
     # List the front and background masks for each region
     r0_front = ["colon.nii.gz"]
     r1_front = ["gallbladder.nii.gz", "liver.nii.gz"]
@@ -138,24 +139,27 @@ def main():
         "inferior_vena_cava.nii.gz",
         "portal_vein_and_splenic_vein.nii.gz"
     ]
+
+    (output_path / '13_regions').mkdir(parents=True, exist_ok=True)
+
     # note, the output folder needed to be created before save the nifti files.
     r0_seg = process_13_regions_mask(r0_front, r0_bg, found_data,
-                                     affine, output_path / f"region_0.nii.gz")
+                                     affine, output_path / f"13_regions/region_0.nii.gz")
     print("mask for Region 0 is complete.")
     _ = process_13_regions_mask(r1_front, r1_bg, found_data,
-                                affine,  output_path / f"region_1.nii.gz")
+                                affine,  output_path / f"13_regions/region_1.nii.gz")
     print("mask for Region 1 is complete.")
     _ = process_13_regions_mask(r2_front, r2_bg, found_data,
-                                affine,  output_path / f"region_2.nii.gz")
+                                affine,  output_path / f"13_regions/region_2.nii.gz")
     print("mask for Region 2 is complete.")
     _ = process_13_regions_mask(r3_front, r3_bg, found_data,
-                                affine, output_path / f"region_3.nii.gz")
+                                affine, output_path / f"13_regions/region_3.nii.gz")
     print("mask for Region 3 is complete.")
     _ = process_13_regions_mask(r6_front, r6_bg, found_data,
-                                affine, output_path / f"region_6.nii.gz")
+                                affine, output_path / f"13_regions/region_6.nii.gz")
     print("mask for Region 6 is complete.")
     r9_seg = process_13_regions_mask(r9_front, r9_bg, found_data,
-                                     affine, output_path / f"region_9.nii.gz")
+                                     affine, output_path / f"13_regions/region_9.nii.gz")
     print("mask for Region 9 is complete.")
 
     # Define the regions that same as r0 and r9
@@ -163,14 +167,14 @@ def main():
     r9_region = [10, 11, 12]
 
     for region in r0_region:
-        filename = output_path / f"region_{region}.nii.gz"
+        filename = output_path / f"13_regions/region_{region}.nii.gz"
         nib.save(r0_seg, filename)
-        print("mask for Region {region} is complete.")
+        print(f"mask for Region {region} is complete.")
 
     for region in r9_region:
-        filename = output_path / f"region_{region}.nii.gz"
+        filename = output_path / f"13_regions/region_{region}.nii.gz"
         nib.save(r9_seg, filename)
-        print("mask for Region {region} is complete.")
+        print(f"mask for Region {region} is complete.")
 
 
 if __name__ == "__main__":
