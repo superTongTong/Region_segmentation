@@ -91,17 +91,19 @@ def main():
     directory_path = "segmentation"  # change to parse output folder
     found_data, affine = find_and_read_nifti_data(directory_path)
 
-    # Load the colon segmentation image
+    # Load the segmentation image for target regions
     colon_seg = found_data["colon.nii.gz"]
     liver_seg = found_data["liver.nii.gz"]
     spleen_seg = found_data["spleen.nii.gz"]
     small_bowel_seg = found_data["small_bowel.nii.gz"]
 
+    # create empty array for each region
     combined_r0_r6 = np.zeros(colon_seg.shape, dtype=np.uint8)
     combined_r1_r2 = np.zeros(liver_seg.shape, dtype=np.uint8)
     combined_r3 = np.zeros(spleen_seg.shape, dtype=np.uint8)
     combined_r9 = np.zeros(small_bowel_seg.shape, dtype=np.uint8)
-    # List the front and background masks for region 1
+
+    # List the front and background masks for each region
     r0_front = ["colon.nii.gz"]
     r1_front = ["gallbladder.nii.gz", "liver.nii.gz"]
     r2_front = ["stomach.nii.gz", "pancreas.nii.gz", "liver.nii.gz"]
@@ -219,7 +221,7 @@ def main():
     r9_seg = process_13_regions_mask(r9_front, r9_bg, found_data, combined_r9,
                                      affine, "13_regions_output/region_9.nii.gz")
 
-    # Define the regions that same as r0 and r9
+    # Define the regions that same as r0 or r9
     r0_region = [4, 5, 7, 8]
     r9_region = [10, 11, 12]
 
