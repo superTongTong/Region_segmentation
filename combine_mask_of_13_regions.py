@@ -57,7 +57,12 @@ def dilated_mask(combined_mask, affine):
     return sitk.GetArrayFromImage(dilated).transpose()
 
 
-def combine_masks_front(list_front, combined_front_seg, data_disc):
+def combine_masks_front(list_front, data_disc):
+    # Load the segmentation image
+    colon_seg = data_disc["colon.nii.gz"]
+
+    # create empty array for each region
+    combined_front_seg = np.zeros(colon_seg.shape, dtype=np.uint8)
 
     for idx, mask in enumerate(list_front):
         img = data_disc[mask]
@@ -75,9 +80,9 @@ def combine_masks_bg(list_bg, combined_final, data_disc, affine):
     return nib.Nifti1Image(combined_final, affine)
 
 
-def process_13_regions_mask(front, background, data_disc, combined, affine, file_out):
+def process_13_regions_mask(front, background, data_disc, affine, file_out):
 
-    combined_front = combine_masks_front(front, combined, data_disc)
+    combined_front = combine_masks_front(front, data_disc)
     enlarged = dilated_mask(combined_front, affine)
     final_seg = combine_masks_bg(background, enlarged, data_disc, affine)
 
@@ -90,18 +95,6 @@ def main():
     # Replace 'directory_path' with the path to the directory where you want to search for the files.
     directory_path = "segmentation"  # change to parse output folder
     found_data, affine = find_and_read_nifti_data(directory_path)
-
-    # Load the segmentation image for target regions
-    colon_seg = found_data["colon.nii.gz"]
-    liver_seg = found_data["liver.nii.gz"]
-    spleen_seg = found_data["spleen.nii.gz"]
-    small_bowel_seg = found_data["small_bowel.nii.gz"]
-
-    # create empty array for each region
-    combined_r0_r6 = np.zeros(colon_seg.shape, dtype=np.uint8)
-    combined_r1_r2 = np.zeros(liver_seg.shape, dtype=np.uint8)
-    combined_r3 = np.zeros(spleen_seg.shape, dtype=np.uint8)
-    combined_r9 = np.zeros(small_bowel_seg.shape, dtype=np.uint8)
 
     # List the front and background masks for each region
     r0_front = ["colon.nii.gz"]
@@ -208,30 +201,38 @@ def main():
         "portal_vein_and_splenic_vein.nii.gz"
     ]
 
-    r0_seg = process_13_regions_mask(r0_front, r0_bg, found_data, combined_r0_r6,
-                                     affine, "13_regions_output/region_0.nii.gz")
-    _ = process_13_regions_mask(r1_front, r1_bg, found_data, combined_r1_r2,
-                                affine, "13_regions_output/region_1.nii.gz")
-    _ = process_13_regions_mask(r2_front, r2_bg, found_data, combined_r1_r2,
-                                affine, "13_regions_output/region_2.nii.gz")
-    _ = process_13_regions_mask(r3_front, r3_bg, found_data, combined_r3,
-                                affine, "13_regions_output/region_3.nii.gz")
-    _ = process_13_regions_mask(r6_front, r6_bg, found_data, combined_r0_r6,
-                                affine, "13_regions_output/region_6.nii.gz")
-    r9_seg = process_13_regions_mask(r9_front, r9_bg, found_data, combined_r9,
-                                     affine, "13_regions_output/region_9.nii.gz")
+    r0_seg = process_13_regions_mask(r0_front, r0_bg, found_data,
+                                     affine, "13_regions/region_0.nii.gz")
+    print("mask for Region 0 is complete.")
+    _ = process_13_regions_mask(r1_front, r1_bg, found_data,
+                                affine, "13_regions/region_1.nii.gz")
+    print("mask for Region 1 is complete.")
+    _ = process_13_regions_mask(r2_front, r2_bg, found_data,
+                                affine, "13_regions/region_2.nii.gz")
+    print("mask for Region 2 is complete.")
+    _ = process_13_regions_mask(r3_front, r3_bg, found_data,
+                                affine, "13_regions/region_3.nii.gz")
+    print("mask for Region 3 is complete.")
+    _ = process_13_regions_mask(r6_front, r6_bg, found_data,
+                                affine, "13_regions/region_6.nii.gz")
+    print("mask for Region 6 is complete.")
+    r9_seg = process_13_regions_mask(r9_front, r9_bg, found_data,
+                                     affine, "13_regions/region_9.nii.gz")
+    print("mask for Region 9 is complete.")
 
-    # Define the regions that same as r0 or r9
+    # Define the regions that same as r0 and r9
     r0_region = [4, 5, 7, 8]
     r9_region = [10, 11, 12]
 
     for region in r0_region:
-        filename = f"13_regions_output/region_{region}.nii.gz"
+        filename = f"13_regions/region_{region}.nii.gz"
         nib.save(r0_seg, filename)
+        print("mask for Region {region} is complete.")
 
     for region in r9_region:
-        filename = f"13_regions_output/region_{region}.nii.gz"
+        filename = f"13_regions/region_{region}.nii.gz"
         nib.save(r9_seg, filename)
+        print("mask for Region {region} is complete.")
 
 
 if __name__ == "__main__":
