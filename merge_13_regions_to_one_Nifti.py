@@ -7,7 +7,7 @@ But get issue, that one Nifti can only save 1 layer 3d images,
 which means it can not handle the overlapped regions.
 '''
 
-#读取数据路径和储存路径都需要修改。
+# deta dir for reading and saving need changed later.
 # Load the needed NIfTI files
 nii_0 = nib.load('./masks/13_regions/region_0.nii.gz')
 nii_1 = nib.load('./masks/13_regions/region_1.nii.gz')
