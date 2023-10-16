@@ -20,16 +20,24 @@ def nib_to_sitk(data, affine):
 
 # Function to search for files in an unknown directory
 def find_and_read_nifti_data(directory):
-    # create dictionary for needed seg_data
+    # create dictionary for needed seg_data 25 organs
+    # found_files = {"liver.nii.gz": None, "colon.nii.gz": None, "heart.nii.gz": None, "small_bowel.nii.gz": None,
+    #                "lung_lower_lobe_right.nii.gz": None, "lung_lower_lobe_left.nii.gz": None,
+    #                "lung_middle_lobe_right.nii.gz": None, "stomach.nii.gz": None, "pancreas.nii.gz": None,
+    #                "duodenum.nii.gz": None, "kidney_right.nii.gz": None, "aorta.nii.gz": None,
+    #                "inferior_vena_cava.nii.gz": None, "portal_vein_and_splenic_vein.nii.gz": None,
+    #                "gallbladder.nii.gz": None, "urinary_bladder.nii.gz": None,
+    #                "kidney_left.nii.gz": None, "spleen.nii.gz": None, "iliac_artery_left.nii.gz": None,
+    #                "iliac_artery_right.nii.gz": None, "iliac_vena_right.nii.gz": None, "iliac_vena_left.nii.gz": None,
+    #                "sacrum.nii.gz": None, "hip_left.nii.gz": None, "hip_right.nii.gz": None}
+    # create dictionary for needed seg_data 25 organs
+
     found_files = {"liver.nii.gz": None, "colon.nii.gz": None, "heart.nii.gz": None, "small_bowel.nii.gz": None,
-                   "lung_lower_lobe_right.nii.gz": None, "lung_lower_lobe_left.nii.gz": None,
-                   "lung_middle_lobe_right.nii.gz": None, "stomach.nii.gz": None, "pancreas.nii.gz": None,
-                   "duodenum.nii.gz": None, "kidney_right.nii.gz": None, "aorta.nii.gz": None,
+                   "stomach.nii.gz": None, "pancreas.nii.gz": None, "kidney_right.nii.gz": None, "aorta.nii.gz": None,
                    "inferior_vena_cava.nii.gz": None, "portal_vein_and_splenic_vein.nii.gz": None,
-                   "gallbladder.nii.gz": None, "urinary_bladder.nii.gz": None, "heart_ventricle_right.nii.gz": None,
-                   "kidney_left.nii.gz": None, "spleen.nii.gz": None, "iliac_artery_left.nii.gz": None,
-                   "iliac_artery_right.nii.gz": None, "iliac_vena_right.nii.gz": None, "iliac_vena_left.nii.gz": None,
-                   "sacrum.nii.gz": None, "hip_left.nii.gz": None, "hip_right.nii.gz": None}
+                   "gallbladder.nii.gz": None, "kidney_left.nii.gz": None, "spleen.nii.gz": None,
+                   "iliac_artery_left.nii.gz": None, "iliac_artery_right.nii.gz": None, "iliac_vena_right.nii.gz": None,
+                   "iliac_vena_left.nii.gz": None, "urinary_bladder.nii.gz": None}
 
     for root, dirs, files in os.walk(directory):
         for filename in files:
@@ -69,20 +77,71 @@ def combine_masks_front(list_front, data_disc):
     return combined_front_seg
 
 
-def combine_masks_bg(list_bg, combined_final, data_disc, affine):
+def combine_masks_bg(list_bg, combined_final, data_dict, affine, region_number, input_path):
+    if region_number == 0:
+        list_0 = ["sacrum.nii.gz"]
+        for idx, mask in enumerate(list_0):
+            img = nib.load(os.path.join(input_path, mask))
+            combined_final[img.get_fdata() > 0.5] = 0
+
+    if region_number == 1:
+        list_1 = ["lung_lower_lobe_right.nii.gz", "lung_middle_lobe_right.nii.gz",
+                  "duodenum.nii.gz"]
+        for idx, mask in enumerate(list_1):
+            img = nib.load(os.path.join(input_path, mask))
+            combined_final[img.get_fdata() > 0.5] = 0
+
+    if region_number == 2:
+        list_2 = ["lung_lower_lobe_right.nii.gz", "lung_lower_lobe_left.nii.gz",
+                  "lung_middle_lobe_right.nii.gz", "duodenum.nii.gz"]
+        for idx, mask in enumerate(list_2):
+            img = nib.load(os.path.join(input_path, mask))
+            combined_final[img.get_fdata() > 0.5] = 0
+
+    if region_number == 3:
+        list_3 = ["lung_lower_lobe_left.nii.gz"]
+        for idx, mask in enumerate(list_3):
+            img = nib.load(os.path.join(input_path, mask))
+            combined_final[img.get_fdata() > 0.5] = 0
+
+    if region_number == 6:
+        list_6 = ["hip_left.nii.gz", "hip_right.nii.gz", "sacrum.nii.gz"]
+        for idx, mask in enumerate(list_6):
+            img = nib.load(os.path.join(input_path, mask))
+            combined_final[img.get_fdata() > 0.5] = 0
+
+    # if region_number == 9:
+    #     list_9 = ["urinary_bladder.nii.gz"]
+    #     for idx, mask in enumerate(list_9):
+    #         img = nib.load(os.path.join(input_path, mask))
+    #         combined_final[img.get_fdata() > 0.5] = 0
 
     for idx, mask in enumerate(list_bg):
-        img = data_disc[mask]
+        img = data_dict[mask]
         combined_final[img > 0.5] = 0
 
     return nib.Nifti1Image(combined_final, affine)
 
 
-def process_13_regions_mask(front, background, data_disc, affine, file_out):
+def process_13_regions_mask(front, background, data_disc, affine, file_out, region_number, input_path, region_6=False):
+    if region_6:
+        combined_front = combine_masks_front(front, data_disc)
+        enlarged = dilated_mask(combined_front, affine)
+        for root, dirs, files in os.walk(file_out):
+            for filename in files:
+                if filename == "region_0.nii.gz":
+                    file_path = os.path.join(root, filename)
+                    try:
+                        r0_seg = nib.load(file_path)
+                        enlarged[r0_seg.get_fdata() > 0.5] = 1
+                    except Exception as e:
+                        print(f"Error reading {filename}: {e}")
 
-    combined_front = combine_masks_front(front, data_disc)
-    enlarged = dilated_mask(combined_front, affine)
-    final_seg = combine_masks_bg(background, enlarged, data_disc, affine)
+        final_seg = combine_masks_bg(background, enlarged, data_disc, affine, region_number, input_path)
+    else:
+        combined_front = combine_masks_front(front, data_disc)
+        enlarged = dilated_mask(combined_front, affine)
+        final_seg = combine_masks_bg(background, enlarged, data_disc, affine, region_number, input_path)
 
     nib.save(final_seg, file_out)
 

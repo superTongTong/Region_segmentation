@@ -41,10 +41,11 @@ def process_dicom_and_copy_folders(input_folder, output_folder):
                 break  # Add the folder once and move on to the next
 
 
-def main():
+def main(segmentations=None):
     parser = get_args_parser()
     args = parser.parse_args()
     input_folder = Path(args.input)
+    # output_folder = Path(args.output/segmentations)
     output_folder = Path(args.output)
 
 
