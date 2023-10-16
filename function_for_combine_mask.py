@@ -124,19 +124,18 @@ def combine_masks_bg(list_bg, combined_final, data_dict, affine, region_number, 
 
 
 def process_13_regions_mask(front, background, data_disc, affine, file_out, region_number, input_path, region_6=False):
+
     if region_6:
         combined_front = combine_masks_front(front, data_disc)
         enlarged = dilated_mask(combined_front, affine)
-        for root, dirs, files in os.walk(file_out):
-            for filename in files:
-                if filename == "region_0.nii.gz":
-                    file_path = os.path.join(root, filename)
-                    try:
-                        r0_seg = nib.load(file_path)
-                        enlarged[r0_seg.get_fdata() > 0.5] = 1
-                    except Exception as e:
-                        print(f"Error reading {filename}: {e}")
-
+        # Get the directory part
+        directory_part = os.path.dirname(file_out)
+        # Desired filename
+        desired_filename = "region_0.nii.gz"
+        # Create the new path
+        seg_0_path = os.path.join(directory_part, desired_filename)
+        r0_seg = nib.load(seg_0_path)
+        enlarged[r0_seg.get_fdata() > 0.5] = 1
         final_seg = combine_masks_bg(background, enlarged, data_disc, affine, region_number, input_path)
     else:
         combined_front = combine_masks_front(front, data_disc)
