@@ -115,11 +115,11 @@ def regions_generation(dicom_folder, output_path):
         "portal_vein_and_splenic_vein.nii.gz"
     ]
 
-    # note, the output folder needed to be created before save the nifti files.
+    # Created the output folder before save the nifti files.
     save_dir = os.path.join(output_path, '13_regions')
     os.makedirs(save_dir, exist_ok=True)
     r0_seg = process_13_regions_mask(r0_front, r0_bg, found_data,
-                                     affine, os.path.join(save_dir, 'region_0.nii.gz'), 0, output_path, region_6=False)
+                                     affine, os.path.join(save_dir, 'region_0.nii.gz'), 0, output_path)
     print("mask for Region 0 is complete.")
     _ = process_13_regions_mask(r1_front, r1_bg, found_data,
                                 affine,  os.path.join(save_dir, 'region_1.nii.gz'), 1, output_path, save_dir)
@@ -135,7 +135,7 @@ def regions_generation(dicom_folder, output_path):
                                 affine, os.path.join(save_dir, 'region_6.nii.gz'), 6, output_path, region_6=True)
     print("mask for Region 6 is complete.")
     r9_seg = process_13_regions_mask(r9_front, r9_bg, found_data,
-                                     affine, os.path.join(save_dir, 'region_9.nii.gz'), 9, output_path, region_6=False)
+                                     affine, os.path.join(save_dir, 'region_9.nii.gz'), 9, output_path,)
     print("mask for Region 9 is complete.")
 
     # Define the regions that same as r0 and r9
