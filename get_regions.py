@@ -122,20 +122,20 @@ def regions_generation(dicom_folder, output_path):
                                      affine, os.path.join(save_dir, 'region_0.nii.gz'), 0, output_path)
     print("mask for Region 0 is complete.")
     _ = process_13_regions_mask(r1_front, r1_bg, found_data,
-                                affine,  os.path.join(save_dir, 'region_1.nii.gz'), 1, output_path, save_dir)
+                                affine,  os.path.join(save_dir, 'region_1.nii.gz'), 1, output_path)
     print("mask for Region 1 is complete.")
     _ = process_13_regions_mask(r2_front, r2_bg, found_data,
-                                affine,  os.path.join(save_dir, 'region_2.nii.gz'), 2, output_path, save_dir)
+                                affine,  os.path.join(save_dir, 'region_2.nii.gz'), 2, output_path)
     print("mask for Region 2 is complete.")
     _ = process_13_regions_mask(r3_front, r3_bg, found_data,
-                                affine, os.path.join(save_dir, 'region_3.nii.gz'), 3, output_path, save_dir)
+                                affine, os.path.join(save_dir, 'region_3.nii.gz'), 3, output_path)
     print("mask for Region 3 is complete.")
 
     _ = process_13_regions_mask(r6_front, r6_bg, found_data,
                                 affine, os.path.join(save_dir, 'region_6.nii.gz'), 6, output_path, region_6=True)
     print("mask for Region 6 is complete.")
     r9_seg = process_13_regions_mask(r9_front, r9_bg, found_data,
-                                     affine, os.path.join(save_dir, 'region_9.nii.gz'), 9, output_path,)
+                                     affine, os.path.join(save_dir, 'region_9.nii.gz'), 9, output_path)
     print("mask for Region 9 is complete.")
 
     # Define the regions that same as r0 and r9
