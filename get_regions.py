@@ -7,7 +7,11 @@ import subprocess
 def regions_generation(dicom_folder, output_path):
 
     # set the command-line arguments as needed.
-    command = f'python ./totalsegmentator/bin/TotalSegmentator.py -i "{dicom_folder}" -o "{output_path}"'
+    command = (f'python ./totalsegmentator/bin/TotalSegmentator.py -i "{dicom_folder}" -o "{output_path}" '
+               f'--roi_subset heart small_bowel lung_lower_lobe_right lung_lower_lobe_left lung_middle_lobe_right '
+               f'stomach pancreas duodenum kidney_right aorta inferior_vena_cava portal_vein_and_splenic_vein '
+               f'urinary_bladder kidney_left iliac_artery_left iliac_artery_right iliac_vena_right iliac_vena_left '
+               f'sacrum hip_left hip_right liver colon gallbladder spleen sacrum')
 
     # Run the command
     subprocess.run(command, shell=True)
@@ -41,10 +45,6 @@ def regions_generation(dicom_folder, output_path):
         "aorta.nii.gz",
         "inferior_vena_cava.nii.gz",
         "portal_vein_and_splenic_vein.nii.gz",
-        "iliac_artery_left.nii.gz",
-        "iliac_artery_right.nii.gz",
-        "iliac_vena_left.nii.gz",
-        "iliac_vena_right.nii.gz"
     ]
     r1_bg = [
         "colon.nii.gz",
@@ -54,8 +54,7 @@ def regions_generation(dicom_folder, output_path):
         "kidney_right.nii.gz",
         "aorta.nii.gz",
         "inferior_vena_cava.nii.gz",
-        "portal_vein_and_splenic_vein.nii.gz",
-        "heart.nii.gz"
+        "portal_vein_and_splenic_vein.nii.gz"
     ]
     r2_bg = [
         "colon.nii.gz",
@@ -64,8 +63,7 @@ def regions_generation(dicom_folder, output_path):
         "kidney_left.nii.gz",
         "aorta.nii.gz",
         "inferior_vena_cava.nii.gz",
-        "portal_vein_and_splenic_vein.nii.gz",
-        "heart.nii.gz"
+        "portal_vein_and_splenic_vein.nii.gz"
     ]
     r3_bg = [
         "stomach.nii.gz",
@@ -73,7 +71,6 @@ def regions_generation(dicom_folder, output_path):
         "aorta.nii.gz",
         "inferior_vena_cava.nii.gz",
         "portal_vein_and_splenic_vein.nii.gz",
-        "heart.nii.gz",
         "colon.nii.gz",
         "small_bowel.nii.gz"
     ]
@@ -97,11 +94,7 @@ def regions_generation(dicom_folder, output_path):
         # "iliac_vena_right.nii.gz"
     ]
     r9_bg = [
-        "iliac_artery_left.nii.gz",
         "urinary_bladder.nii.gz",
-        "iliac_artery_right.nii.gz",
-        "iliac_vena_left.nii.gz",
-        "iliac_vena_right.nii.gz",
         "colon.nii.gz",
         "stomach.nii.gz",
         "gallbladder.nii.gz",
