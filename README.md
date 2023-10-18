@@ -24,10 +24,14 @@ and save all the output files under this output folder. The output folder will h
 4. Extract git repo, install all the package. (pip install -r requirements.txt)
 5. Install CUDA.
    1. Check if GPU driver and CUDA is enabled and accessible by PyTorch  
-   ``import torch ``  
-   ``torch.cuda.is_available()``
+   ```
+   import torch 
+   torch.cuda.is_available()
+   ```
    2. If no CODA installed, run:   
-   ``pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118``
+   ```
+   pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+   ```
    3. Run pytorch again, check if the CUDA is installed.
 6. Install powerToys keep computer awake for python code running overnight. or setting manually.
 7. Prepare small folder for testing everything. For 858 slices DICOM scan (00017->1), it takes 12 minutes.
