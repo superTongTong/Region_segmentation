@@ -45,9 +45,7 @@ def main(segmentations=None):
     parser = get_args_parser()
     args = parser.parse_args()
     input_folder = Path(args.input)
-    # output_folder = Path(args.output/segmentations)
     output_folder = Path(args.output)
-
 
     # input_folder = "./data/example_folder"
     # output_folder = "processed_data"
