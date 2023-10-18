@@ -30,14 +30,23 @@ def find_and_read_nifti_data(directory):
     #                "kidney_left.nii.gz": None, "spleen.nii.gz": None, "iliac_artery_left.nii.gz": None,
     #                "iliac_artery_right.nii.gz": None, "iliac_vena_right.nii.gz": None, "iliac_vena_left.nii.gz": None,
     #                "sacrum.nii.gz": None, "hip_left.nii.gz": None, "hip_right.nii.gz": None}
-    # create dictionary for needed seg_data 25 organs
 
-    found_files = {"liver.nii.gz": None, "colon.nii.gz": None, "heart.nii.gz": None, "small_bowel.nii.gz": None,
-                   "stomach.nii.gz": None, "pancreas.nii.gz": None, "kidney_right.nii.gz": None, "aorta.nii.gz": None,
-                   "inferior_vena_cava.nii.gz": None, "portal_vein_and_splenic_vein.nii.gz": None,
-                   "gallbladder.nii.gz": None, "kidney_left.nii.gz": None, "spleen.nii.gz": None,
-                   "iliac_artery_left.nii.gz": None, "iliac_artery_right.nii.gz": None, "iliac_vena_right.nii.gz": None,
-                   "iliac_vena_left.nii.gz": None, "urinary_bladder.nii.gz": None}
+
+    found_files = {
+           "liver.nii.gz": None,
+           "colon.nii.gz": None,
+           "small_bowel.nii.gz": None,
+           "stomach.nii.gz": None,
+           "pancreas.nii.gz": None,
+           "kidney_right.nii.gz": None,
+           "kidney_left.nii.gz": None,
+           "aorta.nii.gz": None,
+           "inferior_vena_cava.nii.gz": None,
+           "portal_vein_and_splenic_vein.nii.gz": None,
+           "gallbladder.nii.gz": None,
+           "spleen.nii.gz": None,
+           "urinary_bladder.nii.gz": None
+            }
 
     for root, dirs, files in os.walk(directory):
         for filename in files:
@@ -79,27 +88,36 @@ def combine_masks_front(list_front, data_disc):
 
 def combine_masks_bg(list_bg, combined_final, data_dict, affine, region_number, input_path):
     if region_number == 0:
-        list_0 = ["sacrum.nii.gz"]
+        list_0 = ["sacrum.nii.gz",
+                  "iliac_artery_left.nii.gz",
+                  "iliac_artery_right.nii.gz",
+                  "iliac_vena_left.nii.gz",
+                  "iliac_vena_right.nii.gz"]
         for idx, mask in enumerate(list_0):
             img = nib.load(os.path.join(input_path, mask))
             combined_final[img.get_fdata() > 0.5] = 0
 
     if region_number == 1:
-        list_1 = ["lung_lower_lobe_right.nii.gz", "lung_middle_lobe_right.nii.gz",
-                  "duodenum.nii.gz"]
+        list_1 = ["lung_lower_lobe_right.nii.gz",
+                  "lung_middle_lobe_right.nii.gz",
+                  "duodenum.nii.gz",
+                  "heart.nii.gz"]
         for idx, mask in enumerate(list_1):
             img = nib.load(os.path.join(input_path, mask))
             combined_final[img.get_fdata() > 0.5] = 0
 
     if region_number == 2:
-        list_2 = ["lung_lower_lobe_right.nii.gz", "lung_lower_lobe_left.nii.gz",
-                  "lung_middle_lobe_right.nii.gz", "duodenum.nii.gz"]
+        list_2 = ["lung_lower_lobe_right.nii.gz",
+                  "lung_lower_lobe_left.nii.gz",
+                  "lung_middle_lobe_right.nii.gz",
+                  "duodenum.nii.gz",
+                  "heart.nii.gz"]
         for idx, mask in enumerate(list_2):
             img = nib.load(os.path.join(input_path, mask))
             combined_final[img.get_fdata() > 0.5] = 0
 
     if region_number == 3:
-        list_3 = ["lung_lower_lobe_left.nii.gz"]
+        list_3 = ["lung_lower_lobe_left.nii.gz", "heart.nii.gz"]
         for idx, mask in enumerate(list_3):
             img = nib.load(os.path.join(input_path, mask))
             combined_final[img.get_fdata() > 0.5] = 0
@@ -110,11 +128,14 @@ def combine_masks_bg(list_bg, combined_final, data_dict, affine, region_number, 
             img = nib.load(os.path.join(input_path, mask))
             combined_final[img.get_fdata() > 0.5] = 0
 
-    # if region_number == 9:
-    #     list_9 = ["urinary_bladder.nii.gz"]
-    #     for idx, mask in enumerate(list_9):
-    #         img = nib.load(os.path.join(input_path, mask))
-    #         combined_final[img.get_fdata() > 0.5] = 0
+    if region_number == 9:
+        list_9 = ["iliac_artery_left.nii.gz",
+                  "iliac_artery_right.nii.gz",
+                  "iliac_vena_left.nii.gz",
+                  "iliac_vena_right.nii.gz"]
+        for idx, mask in enumerate(list_9):
+            img = nib.load(os.path.join(input_path, mask))
+            combined_final[img.get_fdata() > 0.5] = 0
 
     for idx, mask in enumerate(list_bg):
         img = data_dict[mask]
