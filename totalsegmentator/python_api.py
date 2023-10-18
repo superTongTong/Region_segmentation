@@ -1,21 +1,16 @@
 import sys
-import os
 from pathlib import Path
 import time
 import textwrap
-
 import numpy as np
 import nibabel as nib
 import torch
-# adding totalsegmentator to the system path
-sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from statistics import get_basic_statistics, get_radiomics_features_for_entire_dir
 from libs import download_pretrained_weights
 from config import setup_nnunet, setup_totalseg, increase_prediction_counter
 from config import send_usage_stats, set_license_number, has_valid_license_offline
 from config import get_config_key, set_config_key
 from map_to_binary import class_map
-# from .map_to_total import map_to_total
 
 
 def show_license_info():

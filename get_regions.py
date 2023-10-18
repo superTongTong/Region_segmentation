@@ -7,7 +7,7 @@ import subprocess
 def regions_generation(dicom_folder, output_path):
 
     # set the command-line arguments as needed.
-    command = (f'python ./totalsegmentator/bin/TotalSegmentator.py -i "{dicom_folder}" -o "{output_path}" '
+    command = (f'python ./totalsegmentator/TotalSegmentator.py -i "{dicom_folder}" -o "{output_path}" '
                f'--roi_subset heart small_bowel lung_lower_lobe_right lung_lower_lobe_left lung_middle_lobe_right '
                f'stomach pancreas duodenum kidney_right aorta inferior_vena_cava portal_vein_and_splenic_vein '
                f'urinary_bladder kidney_left iliac_artery_left iliac_artery_right iliac_vena_right iliac_vena_left '

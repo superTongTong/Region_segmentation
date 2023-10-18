@@ -1,13 +1,8 @@
 #!/usr/bin/env python
-import sys
-import os
 import argparse
-from pkg_resources import require
 from pathlib import Path
-
-# adding totalsegmentator to the system path
-sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from python_api import totalsegmentator
+
 
 def main():
     parser = argparse.ArgumentParser(description="Segment 104 anatomical structures in CT images.",

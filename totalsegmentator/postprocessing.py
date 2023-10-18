@@ -1,13 +1,9 @@
 import time
-from pathlib import Path
 import numpy as np
 import nibabel as nib
 from tqdm import tqdm
-import sys
 from scipy.ndimage import binary_dilation, binary_erosion, binary_closing
 from scipy import ndimage
-# adding totalsegmentator to the system path
-sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from map_to_binary import class_map
 
 

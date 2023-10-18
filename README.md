@@ -29,5 +29,5 @@ and save all the output files under this output folder. The output folder will h
    2. If no CODA installed, run: 
    > pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
    3. Run pytorch again, check if the CUDA is installed.
-6. Install powerToys keep computer awake for python code running overnight
+6. Install powerToys keep computer awake for python code running overnight. or setting manually.
 7. Prepare small folder for testing everything. For 858 slices DICOM scan (00017->1), it takes 12 minutes.

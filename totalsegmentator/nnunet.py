@@ -16,7 +16,7 @@ from p_tqdm import p_map
 import tempfile
 import torch
 # adding totalsegmentator to the system path
-sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
+# sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from libs import nostdout
 
 # todo important: change

@@ -1,18 +1,6 @@
-# import sys
-# import os
-# import itertools
-# import pickle
-# from pathlib import Path
-# from pprint import pprint
-# import gc
 
-# import nibabel as nib
 import numpy as np
-# import pandas as pd
-# from tqdm import tqdm
 from fury import window, actor, ui, io, utils
-# # adding totalsegmentator to the system path
-# sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from vtk_utils import contour_from_roi_smooth, plot_mask
 from map_to_binary import class_map
 

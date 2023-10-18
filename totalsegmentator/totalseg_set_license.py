@@ -1,9 +1,6 @@
 #!/usr/bin/env python
-import sys
-from pathlib import Path
 import argparse
-
-from ..config import setup_totalseg, set_license_number
+from Region_segmentation.totalsegmentator.config import setup_totalseg, set_license_number
 
 
 def main():

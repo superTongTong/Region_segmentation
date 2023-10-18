@@ -1,18 +1,11 @@
 import os
-import sys
-import time
 import shutil
 import zipfile
-from pathlib import Path
 import subprocess
 import platform
-
 from tqdm import tqdm
 import numpy as np
-import nibabel as nib
 import dicom2nifti
-# adding totalsegmentator to the system path
-sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from config import get_weights_dir
 
 

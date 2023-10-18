@@ -3,12 +3,8 @@
 from pathlib import Path
 import argparse
 import subprocess
-
 import nibabel as nib
-# import numpy as np
-
-# from ..map_to_binary import class_map_5_parts
-from ..libs import combine_masks
+from Region_segmentation.totalsegmentator.libs import combine_masks
 
 
 def main():

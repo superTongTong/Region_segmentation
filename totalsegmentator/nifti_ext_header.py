@@ -4,7 +4,6 @@ p_dir = str(Path(__file__).absolute().parents[1])
 if p_dir not in sys.path: sys.path.insert(0, p_dir)
 
 import subprocess
-
 import nibabel as nib
 import numpy as np
 

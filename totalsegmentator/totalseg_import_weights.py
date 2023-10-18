@@ -1,11 +1,8 @@
 #!/usr/bin/env python
-import os
-import sys
 from pathlib import Path
 import argparse
 import zipfile
-
-from ..config import get_totalseg_dir, get_weights_dir
+from Region_segmentation.totalsegmentator.config import get_totalseg_dir, get_weights_dir
 
 
 def main():

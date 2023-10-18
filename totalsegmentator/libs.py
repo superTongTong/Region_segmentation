@@ -1,23 +1,17 @@
-import io
 import os
 import contextlib
 import sys
-import random
 import json
 import time
-import string
 import shutil
 import zipfile
 from pathlib import Path
-
 from tqdm import tqdm
 import requests
 import numpy as np
 import nibabel as nib
-# adding totalsegmentator to the system path
-sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from map_to_binary import class_map, class_map_5_parts, commercial_models
-from config import get_totalseg_dir, get_weights_dir, is_valid_license, has_valid_license, has_valid_license_offline
+from config import get_totalseg_dir, get_weights_dir
 
 """
 Helpers to suppress stdout prints from nnunet

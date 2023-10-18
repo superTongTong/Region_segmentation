@@ -2,16 +2,10 @@ import pathlib
 from pathlib import Path
 import json
 from functools import partial
-import time
-import sys
 import numpy as np
-# import pandas as pd
 import nibabel as nib
 from tqdm import tqdm
 from p_tqdm import p_map
-import numpy.ma as ma
-# adding totalsegmentator to the system path
-sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from map_to_binary import class_map
 
 

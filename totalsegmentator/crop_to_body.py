@@ -7,9 +7,9 @@ import numpy as np
 import nibabel as nib
 import torch
 
-from ..libs import download_pretrained_weights, combine_masks
-from ..config import setup_nnunet
-from ..cropping import crop_to_mask, undo_crop
+from Region_segmentation.totalsegmentator.libs import download_pretrained_weights, combine_masks
+from Region_segmentation.totalsegmentator.config import setup_nnunet
+from Region_segmentation.totalsegmentator.cropping import crop_to_mask, undo_crop
 
 
 def main():

@@ -1,11 +1,7 @@
 #!/usr/bin/env python
-import os
-import sys
-from pathlib import Path
 import argparse
-
-from ..libs import download_pretrained_weights
-from ..config import setup_totalseg, set_config_key
+from Region_segmentation.totalsegmentator.libs import download_pretrained_weights
+from Region_segmentation.totalsegmentator.config import setup_totalseg, set_config_key
 
 
 def main():

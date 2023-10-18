@@ -1,13 +1,6 @@
 #!/usr/bin/env python
-import sys
-from pathlib import Path
 import argparse
-import subprocess
-
-import nibabel as nib
-import numpy as np
-
-from ..config import setup_totalseg
+from Region_segmentation.totalsegmentator.config import setup_totalseg
 
 
 def main():
