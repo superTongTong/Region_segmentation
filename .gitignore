@@ -9,6 +9,7 @@
 *.dcm
 *.nii.gz
 .pytest_cache/*
+*.txt
 build/
 dist/
 data/
