@@ -1,32 +1,37 @@
-import nibabel as nib
+import SimpleITK as sitk
 import numpy as np
 
-'''
-Create new python code for merge 13 regions into 1 Nifti file. 
-But get issue, that one Nifti can only save 1 layer 3d images, 
-which means it can not handle the overlapped regions.
-'''
+# itk_img_0 = sitk.ReadImage('./masks/13_regions/region_0.nii.gz', sitk.sitkInt8)
+# itk_img_1 = sitk.ReadImage('./masks/13_regions/region_1.nii.gz', sitk.sitkInt8)
+# itk_img_2 = sitk.ReadImage('./masks/13_regions/region_2.nii.gz', sitk.sitkInt8)
+#
+# np_img_0 = sitk.GetArrayFromImage(itk_img_0)
+# np_img_1 = sitk.GetArrayFromImage(itk_img_1)
+# np_img_2 = sitk.GetArrayFromImage(itk_img_2)
+#
+# combined = np.stack([
+# np_img_0,
+# np_img_1,
+# np_img_2,
+# ], axis=-1)
+#
+# combined_itk = sitk.GetImageFromArray(combined, isVector=True)
+#
+# combined_itk.CopyInformation(itk_img_0)
+#
+# sitk.WriteImage(combined_itk, 'masks/combined_13_regions.nii.gz')
 
-# deta dir for reading and saving need changed later.
-# Load the needed NIfTI files
-nii_0 = nib.load('./masks/13_regions/region_0.nii.gz')
-nii_1 = nib.load('./masks/13_regions/region_1.nii.gz')
-nii_2 = nib.load('./masks/13_regions/region_2.nii.gz')
-nii_3 = nib.load('./masks/13_regions/region_3.nii.gz')
-nii_6 = nib.load('./masks/13_regions/region_6.nii.gz')
-nii_9 = nib.load('./masks/13_regions/region_9.nii.gz')
+np_arrays = []
+itk_img = None
+for i in range(3):
+    itk_img = sitk.ReadImage(f'./masks/13_regions/region_{i}.nii.gz', sitk.sitkInt8)
+    np_img = sitk.GetArrayFromImage(itk_img)
+    np_arrays.append(np_img)
 
-# created empty array
-combined_data = np.zeros(nii_6.shape, dtype=np.uint8)
+# Stack the numpy arrays along the last dimension (axis=-1)
+combined = np.stack(np_arrays, axis=-1)
 
-# assign regions to difference classes.
-combined_data[nii_0.get_fdata()>0.5] = 1
-combined_data[nii_1.get_fdata()>0.5] = 2
-combined_data[nii_2.get_fdata()>0.5] = 3
-combined_data[nii_3.get_fdata()>0.5] = 4
-combined_data[nii_6.get_fdata()>0.5] = 6
-combined_data[nii_9.get_fdata()>0.5] = 9
+combined_itk = sitk.GetImageFromArray(combined, isVector=True)
 
-# save as one Nifti file
-nib.save(nib.Nifti1Image(combined_data, nii_6.affine), 'combined_13_regions_v3.nii.gz')
-
+combined_itk.CopyInformation(itk_img)
+sitk.WriteImage(combined_itk, 'test.nii.gz')

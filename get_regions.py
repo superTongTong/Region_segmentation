@@ -2,6 +2,8 @@ from function_for_combine_mask import find_and_read_nifti_data, process_13_regio
 import nibabel as nib
 import os
 import subprocess
+import SimpleITK as sitk
+import numpy as np
 
 
 def regions_generation(input_folder, save_seg, output_path):
@@ -145,3 +147,20 @@ def regions_generation(input_folder, save_seg, output_path):
         filename = os.path.join(output_path, f"13_regions/region_{region}.nii.gz")
         nib.save(r9_seg, filename)
         print(f"mask for Region {region} is complete.")
+
+    print("start combine 13 regions mask....")
+    np_arrays = []
+    itk_img = None  # Define itk_img before the loop
+    for i in range(13):
+        itk_img = sitk.ReadImage(os.path.join(save_dir, f'region_{i}.nii.gz'), sitk.sitkInt8)
+        np_img = sitk.GetArrayFromImage(itk_img)
+        np_arrays.append(np_img)
+
+    # Stack the numpy arrays along the last dimension (axis=-1)
+    combined = np.stack(np_arrays, axis=-1)
+
+    combined_itk = sitk.GetImageFromArray(combined, isVector=True)
+
+    combined_itk.CopyInformation(itk_img)
+    sitk.WriteImage(combined_itk, os.path.join(save_dir, 'combined_13_regions.nii.gz'))
+    print("13 regions mask combination is complete.")
