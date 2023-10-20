@@ -9,7 +9,7 @@ python .\region_segmentation.py -i "<input directory>" -o <output folder name>
 ```
 > **Note:** Don't forget modify the **input directory** and **output folder name** before you run the command line.  
 > Example of command line looks like:  
-> ``python .\region_segmentation.py -i "./data/example_folder" -o processed_data_v2``
+> ``python .\region_segmentation.py -i "./data/example_folder" -o processed_data``
 ### Command line explanations:
 **-i "./input/folder/directory"**:   
 please fill in the directory of the input folder in the Double quotes.  
@@ -17,7 +17,7 @@ please fill in the directory of the input folder in the Double quotes.
 **-o name_of_output_folder**:   
 you can give a output folder name, the code will create the folder which you named,
 and save all the output files under this output folder. The output folder will have same structure as input folder.
-## Action to set_up python code working environment:
+## Steps for set_up python code working environment:
 1. Download git repo.
 2. Install pycharm
 3. Create virtual environment.
