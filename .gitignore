@@ -15,6 +15,9 @@ dist/
 data/
 masks/
 processed_data_v1/
+processed_data_v2/
+processed_data_v3/
+processed_data_v4/
 resources/imgs
 tmp_weights/
 tmp_weights_DELETE/

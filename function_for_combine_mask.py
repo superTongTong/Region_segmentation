@@ -31,7 +31,6 @@ def find_and_read_nifti_data(directory):
     #                "iliac_artery_right.nii.gz": None, "iliac_vena_right.nii.gz": None, "iliac_vena_left.nii.gz": None,
     #                "sacrum.nii.gz": None, "hip_left.nii.gz": None, "hip_right.nii.gz": None}
 
-
     found_files = {
            "liver.nii.gz": None,
            "colon.nii.gz": None,
