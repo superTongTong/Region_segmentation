@@ -4,10 +4,11 @@ import os
 import subprocess
 
 
-def regions_generation(dicom_folder, output_path):
+def regions_generation(input_folder, save_seg, output_path):
 
     # set the command-line arguments as needed.
-    command = (f'python ./totalsegmentator/TotalSegmentator.py -i "{dicom_folder}" -o "{output_path}" '
+    command = (f'python ./totalsegmentator/TotalSegmentator.py -i "{input_folder}" -o "{save_seg}" '
+               # f'--output_type "{out_type}" '
                f'--roi_subset heart small_bowel lung_lower_lobe_right lung_lower_lobe_left lung_middle_lobe_right '
                f'stomach pancreas duodenum kidney_right aorta inferior_vena_cava portal_vein_and_splenic_vein '
                f'urinary_bladder kidney_left iliac_artery_left iliac_artery_right iliac_vena_right iliac_vena_left '
@@ -19,9 +20,9 @@ def regions_generation(dicom_folder, output_path):
     print("Process for segmentator is complete, start combine masks for 13 regions.")
     print("Start combining masks for 13 regions.")
 
-    found_data = find_and_read_nifti_data(output_path)
+    found_data = find_and_read_nifti_data(save_seg)
     print("Finish loading organ data.")
-    liver_seg = nib.load(os.path.join(output_path, "liver.nii.gz"))
+    liver_seg = nib.load(os.path.join(save_seg, "liver.nii.gz"))
     affine = liver_seg.affine
     # List the front and background masks for each region
     r0_front = ["colon.nii.gz"]
@@ -112,23 +113,23 @@ def regions_generation(dicom_folder, output_path):
     save_dir = os.path.join(output_path, '13_regions')
     os.makedirs(save_dir, exist_ok=True)
     r0_seg = process_13_regions_mask(r0_front, r0_bg, found_data,
-                                     affine, os.path.join(save_dir, 'region_0.nii.gz'), 0, output_path)
+                                     affine, os.path.join(save_dir, 'region_0.nii.gz'), 0, save_seg)
     print("mask for Region 0 is complete.")
     _ = process_13_regions_mask(r1_front, r1_bg, found_data,
-                                affine,  os.path.join(save_dir, 'region_1.nii.gz'), 1, output_path)
+                                affine,  os.path.join(save_dir, 'region_1.nii.gz'), 1, save_seg)
     print("mask for Region 1 is complete.")
     _ = process_13_regions_mask(r2_front, r2_bg, found_data,
-                                affine,  os.path.join(save_dir, 'region_2.nii.gz'), 2, output_path)
+                                affine,  os.path.join(save_dir, 'region_2.nii.gz'), 2, save_seg)
     print("mask for Region 2 is complete.")
     _ = process_13_regions_mask(r3_front, r3_bg, found_data,
-                                affine, os.path.join(save_dir, 'region_3.nii.gz'), 3, output_path)
+                                affine, os.path.join(save_dir, 'region_3.nii.gz'), 3, save_seg)
     print("mask for Region 3 is complete.")
 
     _ = process_13_regions_mask(r6_front, r6_bg, found_data,
-                                affine, os.path.join(save_dir, 'region_6.nii.gz'), 6, output_path, region_6=True)
+                                affine, os.path.join(save_dir, 'region_6.nii.gz'), 6, save_seg, region_6=True)
     print("mask for Region 6 is complete.")
     r9_seg = process_13_regions_mask(r9_front, r9_bg, found_data,
-                                     affine, os.path.join(save_dir, 'region_9.nii.gz'), 9, output_path)
+                                     affine, os.path.join(save_dir, 'region_9.nii.gz'), 9, save_seg)
     print("mask for Region 9 is complete.")
 
     # Define the regions that same as r0 and r9
