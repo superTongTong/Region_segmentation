@@ -47,7 +47,7 @@ def regions_generation(input_folder, save_seg, output_path):
         "pancreas.nii.gz",
         "aorta.nii.gz",
         "inferior_vena_cava.nii.gz",
-        "portal_vein_and_splenic_vein.nii.gz",
+        "portal_vein_and_splenic_vein.nii.gz"
     ]
     r1_bg = [
         "colon.nii.gz",

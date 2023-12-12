@@ -1,4 +1,4 @@
-from code_test import crop_image
+from nn_algorithm import crop_image
 import nibabel as nib
 
 

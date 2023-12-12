@@ -1,9 +1,6 @@
 import os
 import sys
-# import random
-# import string
 import time
-# import platform
 import shutil
 import subprocess
 from pathlib import Path
@@ -12,11 +9,8 @@ import numpy as np
 import nibabel as nib
 from functools import partial
 from p_tqdm import p_map
-# from multiprocessing import Pool
 import tempfile
 import torch
-# adding totalsegmentator to the system path
-# sys.path.insert(0, 'C:/Users/20202119/PycharmProjects/Totalsegmentator/TotalSegmentator-master/totalsegmentator')
 from libs import nostdout
 
 # todo important: change
@@ -306,7 +300,7 @@ def nnUNet_predict_image(file_in, file_out, task_id, model="3d_fullres", folds=N
             if not quiet: print(f"Resampling...")
             st = time.time()
             img_in_shape = img_in.shape
-            img_in_zooms = img_in.header.get_zooms()
+            # img_in_zooms = img_in.header.get_zooms()
             img_in_rsp = change_spacing(img_in, [resample, resample, resample],
                                         order=3, dtype=np.int32, nr_cpus=nr_threads_resampling)  # 4 cpus instead of 1 makes it a bit slower
             if verbose:
@@ -428,7 +422,7 @@ def nnUNet_predict_image(file_in, file_out, task_id, model="3d_fullres", folds=N
             img_pred = nib.Nifti1Image(img_pred_pp, img_pred.affine)
 
         if preview:
-            from totalsegmentator.preview import generate_preview
+            from preview import generate_preview
             # Generate preview before upsampling so it is faster and still in canonical space 
             # for better orientation.
             if not quiet: print("Generating preview...")

@@ -297,10 +297,10 @@ def totalsegmentator(input, output, ml=False, nr_thr_resamp=1, nr_thr_saving=6,
                          no_derived_masks=no_derived_masks, v1_order=v1_order)
     seg = seg_img.get_fdata().astype(np.uint8)
 
-    config = increase_prediction_counter()
-    send_usage_stats(config, {"task": task, "fast": fast, "preview": preview,
-                              "multilabel": ml, "roi_subset": roi_subset,
-                              "statistics": statistics, "radiomics": radiomics})
+    # config = increase_prediction_counter()
+    # send_usage_stats(config, {"task": task, "fast": fast, "preview": preview,
+    #                           "multilabel": ml, "roi_subset": roi_subset,
+    #                           "statistics": statistics, "radiomics": radiomics})
 
     if statistics:
         if not quiet: print("Calculating statistics...")

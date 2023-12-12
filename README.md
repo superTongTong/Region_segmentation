@@ -21,6 +21,7 @@ and save all the output files under this output folder. The output folder will h
 1. Download git repo.
 2. Install pycharm
 3. Create virtual environment.
+   1. https://www.jetbrains.com/help/pycharm/configuring-local-python-interpreters.html
 4. Extract git repo, install all the package. (pip install -r requirements.txt)
 5. Install CUDA.
    1. Check if GPU driver and CUDA is enabled and accessible by PyTorch  

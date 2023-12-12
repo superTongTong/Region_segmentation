@@ -168,7 +168,7 @@ def change_spacing(img_in, new_spacing=1.25, target_shape=None, order=0, nr_cpus
         zoom = img_spacing / new_spacing
 
     # copy very important; otherwise new_affine changes will also be in old affine
-    new_affine = np.copy(img_in.affine)
+    # new_affine = np.copy(img_in.affine)
 
     # This is only correct if all off-diagonal elements are 0
     # new_affine[0, 0] = new_spacing[0] if img_in.affine[0, 0] > 0 else -new_spacing[0]
