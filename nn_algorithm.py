@@ -113,19 +113,19 @@ def restore_cropped_image(sub_array, start_indices, end_indices, original_shape=
 
 
 def main():
-    # # Load the NIfTI files
-    # source_file_path = "./masks/13_regions/for_knn_test.nii.gz"
-    # segs = nib.load(source_file_path)
-    #
-    # # Convert to a list according to the last dimension
-    # seg_len = segs.shape[-1]
-    # list_of_seg = np.split(segs.get_fdata(), seg_len, axis=-1)
-    # list_of_seg_reshape = [arr.squeeze() for arr in list_of_seg]
-    # overlap_data, data_for_knn = find_overlap_and_create_seg_for_knn(list_of_seg_reshape)
+    # Load the NIfTI files
+    source_file_path = "./masks/13_regions/for_knn_test.nii.gz"
+    segs = nib.load(source_file_path)
 
-    source_file_path = "./masks/13_regions/knn_part.nii.gz"
-    data_for_knn = nib.load(source_file_path)
-    fdata_knn = data_for_knn.get_fdata()
+    # Convert to a list according to the last dimension
+    seg_len = segs.shape[-1]
+    list_of_seg = np.split(segs.get_fdata(), seg_len, axis=-1)
+    list_of_seg_reshape = [arr.squeeze() for arr in list_of_seg]
+    overlap_data, data_for_knn = find_overlap_and_create_seg_for_knn(list_of_seg_reshape)
+
+    # source_file_path = "./masks/13_regions/knn_part.nii.gz"
+    # data_for_knn = nib.load(source_file_path)
+    fdata_knn = data_for_knn#.get_fdata()
     # crop the image
     cropped_data, start_point, end_point = crop_image(fdata_knn)
 
