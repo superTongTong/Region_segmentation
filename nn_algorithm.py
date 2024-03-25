@@ -157,6 +157,10 @@ def find_overlap_and_create_seg_for_knn(segmentations):
 
 
 def crop_image(input_array):
+    '''
+    :param input_array: np.array
+    :return: cropped_array, max_indices, min_indices
+    '''
     # Find the indices of nonzero values
     nonzero_indices = np.argwhere(input_array)
 

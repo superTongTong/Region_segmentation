@@ -29,7 +29,7 @@ and save all the output files under this output folder. The output folder will h
    import torch 
    torch.cuda.is_available()
    ```
-   2. If no CODA installed, run:   
+   2. If no CUDA installed, run:   
    ```
    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
    ```
